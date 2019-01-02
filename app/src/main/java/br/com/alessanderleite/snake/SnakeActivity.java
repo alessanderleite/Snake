@@ -24,5 +24,24 @@ public class SnakeActivity extends Activity {
 
         // Create a new instance of SnakeEngine class
         snakeEngine = new SnakeEngine(this, size);
+
+        // Make snakeEngine the view of the Activity
+        setContentView(snakeEngine);
+    }
+
+    // Start the thread in snakeEngine
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        snakeEngine.resume();
+    }
+
+    // Stop the thread in snakeEngine
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        snakeEngine.pause();
     }
 }
