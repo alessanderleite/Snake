@@ -1,12 +1,17 @@
 package br.com.alessanderleite.snake;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.io.IOException;
 
 public class SnakeEngine extends SurfaceView implements Runnable {
 
@@ -74,6 +79,43 @@ public class SnakeEngine extends SurfaceView implements Runnable {
 
     public SnakeEngine(Context context, Point size) {
         super(context);
+
+        context = context;
+
+        screenX = size.x;
+        screenY = size.y;
+
+        // Work out how many pixels each block is
+        blockSize = screenX / NUM_BLOCKS_WIDE;
+        // How many blocks of the same size will fit into the height
+        numBlocksHigh = screenY / blockSize;
+
+        // Set the sound up
+        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        try {
+            // Create objects of the 2 required classes
+            // Use m_Context because this is a reference to the Activity
+            AssetManager assetManager = context.getAssets();
+            AssetFileDescriptor descriptor;
+
+            // Prepare the two sounds in memory
+            descriptor = assetManager.openFd("get_mouse_sound.ogg");
+            eat_bob = soundPool.load(descriptor, 0);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Initialize the drawing objects
+        surfaceHolder = getHolder();
+        paint = new Paint();
+
+        // If you score 200 you are rewarded with a crash achievement!
+        snakeXs = new int[200];
+        snakeYs = new int[200];
+
+        // Start the game
+        newGame();
     }
 
     @Override
