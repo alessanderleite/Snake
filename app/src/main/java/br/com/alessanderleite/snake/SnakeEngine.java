@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.media.AudioManager;
@@ -232,6 +233,45 @@ public class SnakeEngine extends SurfaceView implements Runnable {
             soundPool.play(snake_crash,1,1,0,0,1);
 
             newGame();
+        }
+    }
+
+    public void draw() {
+        // Get a lock on the canvas
+        if (surfaceHolder.getSurface().isValid()) {
+            canvas = surfaceHolder.lockCanvas();
+
+            // Fill the screen with Game Code School blue
+            canvas.drawColor(Color.argb(255, 26, 128, 182));
+
+            // Set the color of the paint to draw the snake white
+            paint.setColor(Color.argb(255,255,255,255));
+
+            // Scale the HUD text
+            paint.setTextSize(90);
+            canvas.drawText("Score: " + score, 10, 70, paint);
+
+            // Draw the snake one block at a time
+            for (int i = 0; i < snakeLength; i++) {
+                canvas.drawRect(snakeXs[i] * blockSize,
+                        (snakeYs[i] * blockSize),
+                        (snakeXs[i] * blockSize) + blockSize,
+                        (snakeYs[i] * blockSize) + blockSize,
+                        paint);
+            }
+
+            // Set the color of the paint to draw Bob red
+            paint.setColor(Color.argb(255, 255, 0, 0));
+
+            // Draw Bob
+            canvas.drawRect(bobX * blockSize,
+                    (bobY * blockSize),
+                    (bobX * blockSize) + blockSize,
+                    (bobY * blockSize) + blockSize,
+                    paint);
+
+            // Unlock the canvas and reveal the graphics for this frame
+            surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
 }
