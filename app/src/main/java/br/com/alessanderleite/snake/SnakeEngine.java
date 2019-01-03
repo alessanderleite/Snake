@@ -120,6 +120,21 @@ public class SnakeEngine extends SurfaceView implements Runnable {
 
     @Override
     public void run() {
+        
+    }
 
+    public void pause() {
+        isPlaying = false;
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void resume() {
+        isPlaying = true;
+        thread = new Thread(this);
+        thread.start();
     }
 }
