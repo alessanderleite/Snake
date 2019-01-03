@@ -216,7 +216,22 @@ public class SnakeEngine extends SurfaceView implements Runnable {
                 dead = true;
             }
         }
-
         return dead;
+    }
+
+    public void update() {
+        // Did the head of the snake eat Bob?
+        if (snakeXs[0] == bobX && snakeYs[0] == bobY) {
+            eatBob();
+        }
+
+        moveSnake();
+
+        if (detectDeath()) {
+            // start again
+            soundPool.play(snake_crash,1,1,0,0,1);
+
+            newGame();
+        }
     }
 }
