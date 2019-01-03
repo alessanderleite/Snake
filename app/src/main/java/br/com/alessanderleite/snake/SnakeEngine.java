@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class SnakeEngine extends SurfaceView implements Runnable {
 
@@ -152,5 +153,11 @@ public class SnakeEngine extends SurfaceView implements Runnable {
 
         // Setu nextFrameTime so an update is triggered
         nextFrameTime = System.currentTimeMillis();
+    }
+
+    public void spawnBob() {
+        Random random = new Random();
+        bobX = random.nextInt(NUM_BLOCKS_WIDE - 1) + 1;
+        bobY = random.nextInt(numBlocksHigh - 1) + 1;
     }
 }
