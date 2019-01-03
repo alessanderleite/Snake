@@ -123,6 +123,14 @@ public class SnakeEngine extends SurfaceView implements Runnable {
     @Override
     public void run() {
 
+        while (isPlaying) {
+
+            // Update 10 times a second
+            if (updateRequired()) {
+                update();
+                draw();
+            }
+        }
     }
 
     public void pause() {
@@ -152,7 +160,7 @@ public class SnakeEngine extends SurfaceView implements Runnable {
         // Reset the score
         score = 0;
 
-        // Setu nextFrameTime so an update is triggered
+        // Setup nextFrameTime so an update is triggered
         nextFrameTime = System.currentTimeMillis();
     }
 
