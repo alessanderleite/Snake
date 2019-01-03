@@ -274,4 +274,20 @@ public class SnakeEngine extends SurfaceView implements Runnable {
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
+
+    public boolean updateRequired() {
+
+        // Are we due to update the frame
+        if (nextFrameTime <= System.currentTimeMillis()) {
+            // Tenth of a second has passed
+
+            // Setup when the next update will be triggered
+            nextFrameTime = System.currentTimeMillis() + MILLIS_PER_SECOND / FPS;
+
+            // Return true so that the update and draw
+            // functions are executed
+            return true;
+        }
+        return false;
+    }
 }
