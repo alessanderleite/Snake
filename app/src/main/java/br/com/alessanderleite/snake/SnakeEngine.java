@@ -120,7 +120,7 @@ public class SnakeEngine extends SurfaceView implements Runnable {
 
     @Override
     public void run() {
-        
+
     }
 
     public void pause() {
@@ -136,5 +136,21 @@ public class SnakeEngine extends SurfaceView implements Runnable {
         isPlaying = true;
         thread = new Thread(this);
         thread.start();
+    }
+
+    public void newGame() {
+        // Start with a single snake segment
+        snakeLength = 1;
+        snakeXs[0] = NUM_BLOCKS_WIDE / 2;
+        snakeYs[0] = numBlocksHigh / 2;
+
+        // Get Bob ready for dinner
+        spawnBob();
+
+        // Reset the score
+        score = 0;
+
+        // Setu nextFrameTime so an update is triggered
+        nextFrameTime = System.currentTimeMillis();
     }
 }
