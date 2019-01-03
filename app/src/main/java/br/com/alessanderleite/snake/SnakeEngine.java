@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -297,5 +298,45 @@ public class SnakeEngine extends SurfaceView implements Runnable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_UP:
+                if (motionEvent.getX() >= screenX / 2) {
+                    switch (heading) {
+                        case UP:
+                            heading = Heading.RIGHT;
+                            break;
+                        case RIGHT:
+                            heading = Heading.DOWN;
+                            break;
+                        case DOWN:
+                            heading = Heading.LEFT;
+                            break;
+                        case LEFT:
+                            heading = Heading.UP;
+                            break;
+                    }
+                } else {
+                    switch (heading) {
+                        case UP:
+                            heading = Heading.LEFT;
+                            break;
+                        case LEFT:
+                            heading = Heading.DOWN;
+                            break;
+                        case DOWN:
+                            heading = Heading.RIGHT;
+                            break;
+                        case RIGHT:
+                            heading = Heading.UP;
+                            break;
+                    }
+                }
+        }
+        return true;
     }
 }
